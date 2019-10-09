@@ -1,0 +1,13 @@
+{
+  "name": "micro-mqtt-broker",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --require dotenv/config index.js"
+  },
+  "dependencies": {
+    "mosca": "2.8.3"
+  },
+  "devDependencies": {
+    "dotenv": "7.0.0"
+  }
+}
