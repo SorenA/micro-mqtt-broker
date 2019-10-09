@@ -1,13 +1,12 @@
----
-login: "admin:$apr1$eMm5z3r4$J9Cu/VXChQ6Xg3kDj3.Nh." # .htpasswd format - Username: admin, Password: 123
-subscribeAccess:
-- "#" # Full access
-publishAccess:
-- "#" # Full access
----
-login: "user:$apr1$5Ss9ZFwG$DB4lG13cH.ckdj10nBkjW/" # .htpasswd format - Username: user, Password: 456
-subscribeAccess:
-- "sensors/1/metrics/#"
-publishAccess:
-- "sensors/+/actions/restart"
-- "sensors/+/metrics/#"
+- login: "admin:$apr1$eMm5z3r4$J9Cu/VXChQ6Xg3kDj3.Nh." # .htpasswd format - Username: admin, Password: 123
+  subscribeAccess:
+  - "#" # Full access
+  publishAccess:
+  - "#" # Full access
+
+- login: "user:$apr1$5Ss9ZFwG$DB4lG13cH.ckdj10nBkjW/" # .htpasswd format - Username: user, Password: 456
+  subscribeAccess:
+  - "sensors/1/metrics/#"
+  publishAccess:
+  - "sensors/+/actions/restart"
+  - "sensors/+/metrics/#"

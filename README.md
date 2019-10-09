@@ -77,19 +77,18 @@ AUTH_YAML_FILE=/opt/mqtt/auth.yaml
 Sample file:
 
 ```yaml
----
-login: "sample-admin:$apr1$.qu4F5HV$q8Rw/DrkmAizalGeHi56t0" # .htpasswd format
-subscribeAccess:
-- "#" # Full access
-publishAccess:
-- "#" # Full access
----
-login: "sample-user:$apr1$1QzP30DN$Do9gE3Mvg2SrVJHuRIOjQ/" # .htpasswd format
-subscribeAccess:
-- "sensors/1/metrics/#"
-publishAccess:
-- "sensors/+/actions/restart"
-- "sensors/+/metrics/#"
+- login: "sample-admin:$apr1$.qu4F5HV$q8Rw/DrkmAizalGeHi56t0" # .htpasswd format
+  subscribeAccess:
+  - "#" # Full access
+  publishAccess:
+  - "#" # Full access
+
+- login: "sample-user:$apr1$1QzP30DN$Do9gE3Mvg2SrVJHuRIOjQ/" # .htpasswd format
+  subscribeAccess:
+  - "sensors/1/metrics/#"
+  publishAccess:
+  - "sensors/+/actions/restart"
+  - "sensors/+/metrics/#"
 ```
 
 #### JSON File
