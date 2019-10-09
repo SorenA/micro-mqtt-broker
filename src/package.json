@@ -1,5 +1,13 @@
 {
   "name": "micro-mqtt-broker",
+  "description": "Micro MQTT broker based on Mosca MQTT with multiple authentication providers, TLS and ACL support.",
+  "homepage": "https://github.com/SorenA/micro-mqtt-broker",
+  "repository": "github:SorenA/micro-mqtt-broker",
+  "license": "MIT",
+  "author": {
+    "name": "Søren Lysdal",
+    "url": "https://github.com/SorenA/"
+  },
   "main": "index.js",
   "scripts": {
     "dev": "node --require dotenv/config index.js"
