@@ -17,10 +17,62 @@ const authApiEndpoint = process.env.AUTH_API_ENDPOINT || '';
 const authApiToken = process.env.AUTH_API_TOKEN || '';
 
 /**
+ * Callback: Authenticate - Called when a client tries to authenticate on connect
+ */
+const cbAuthenticate = async function (client, username, password, callback) {
+  let isAuthenticated = true;
+
+  if (isAuthenticated) {
+    console.info(`Client ${client.id}: Accepted connection - Valid authentication`);
+  } else {
+    console.info(`Client ${client.id}: Rejected connection - Invalid credentials`);
+  }
+
+  callback(null, isAuthenticated);
+}
+
+/**
+ * Callback: Authorize Publish - Called when a client attempts to publish a message
+ */
+const cbAuthorizePublish = function (client, topic, payload, callback) {
+  let isAuthorized = true;
+
+  if (isAuthorized) {
+    console.info(`Client ${client.id}: Accepted publish: ${topic}`);
+  } else {
+    console.info(`Client ${client.id}: Rejected publish: ${topic}`);
+  }
+
+  callback(null, isAuthorized);
+};
+
+/**
+ * Callback: Authorize Subscribe - Called when a client attempts to subscribe to a topic
+ */
+const cbAuthorizeSubscribe = function (client, topic, callback) {
+  let isAuthorized = true;
+
+  if (isAuthorized) {
+    console.info(`Client ${client.id}: Accepted subscription: ${topic}`);
+  } else {
+    console.info(`Client ${client.id}: Rejected subscription: ${topic}`);
+  }
+
+  callback(null, isAuthorized);
+};
+
+/**
  * Event: On Server Ready - Broker is started and ready for connections
  */
 function onServerReady() {
   console.info(`MQTT Broker: Ready for connections.`);
+
+  // Register auth callbacks
+  server.authenticate = cbAuthenticate;
+  server.authorizePublish = cbAuthorizePublish;
+  server.authorizeSubscribe = cbAuthorizeSubscribe;
+
+  console.info(`MQTT Broker: Configuration complete.`);
 };
 
 /**
