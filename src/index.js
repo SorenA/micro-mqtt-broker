@@ -16,11 +16,21 @@ const authJsonFile = process.env.AUTH_JSON_FILE || '/opt/mqtt/auth.json';
 const authApiEndpoint = process.env.AUTH_API_ENDPOINT || '';
 const authApiToken = process.env.AUTH_API_TOKEN || '';
 
+// Select auth provider
+let activeAuthProvider = null;
+switch (authProvider) {
+  case 'NONE':
+      activeAuthProvider = require('./providers/auth-none');
+    break;
+  default:
+    throw new Error('Invalid provider in AUTH_PROVIDER');
+}
+
 /**
  * Callback: Authenticate - Called when a client tries to authenticate on connect
  */
 const cbAuthenticate = async function (client, username, password, callback) {
-  let isAuthenticated = true;
+  let isAuthenticated = activeAuthProvider.isAuthenticationValid(client, username, password);
 
   if (isAuthenticated) {
     console.info(`Client ${client.id}: Accepted connection - Valid authentication`);
@@ -35,6 +45,8 @@ const cbAuthenticate = async function (client, username, password, callback) {
  * Callback: Authorize Publish - Called when a client attempts to publish a message
  */
 const cbAuthorizePublish = function (client, topic, payload, callback) {
+  const accessControlList = activeAuthProvider.getSubscribeAccessControlList(client);
+
   let isAuthorized = true;
 
   if (isAuthorized) {
@@ -50,6 +62,8 @@ const cbAuthorizePublish = function (client, topic, payload, callback) {
  * Callback: Authorize Subscribe - Called when a client attempts to subscribe to a topic
  */
 const cbAuthorizeSubscribe = function (client, topic, callback) {
+  const accessControlList = activeAuthProvider.getPublishAccessControlList(client);
+
   let isAuthorized = true;
 
   if (isAuthorized) {
