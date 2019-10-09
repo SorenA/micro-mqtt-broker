@@ -1,13 +1,13 @@
 ---
 login: "admin:$apr1$eMm5z3r4$J9Cu/VXChQ6Xg3kDj3.Nh." # .htpasswd format - Username: admin, Password: 123
-readAccess:
+subscribeAccess:
 - "#" # Full access
-writeAccess:
+publishAccess:
 - "#" # Full access
 ---
 login: "user:$apr1$5Ss9ZFwG$DB4lG13cH.ckdj10nBkjW/" # .htpasswd format - Username: user, Password: 456
-readAccess:
+subscribeAccess:
 - "sensors/1/metrics/#"
-writeAccess:
+publishAccess:
 - "sensors/+/actions/restart"
 - "sensors/+/metrics/#"

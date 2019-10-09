@@ -1,19 +1,19 @@
 [
     {
         "login": "admin:$apr1$eMm5z3r4$J9Cu/VXChQ6Xg3kDj3.Nh.",
-        "readAccess": [
+        "subscribeAccess": [
             "#"
         ],
-        "writeAccess": [
+        "publishAccess": [
             "#"
         ]
     },
     {
         "login": "user:$apr1$5Ss9ZFwG$DB4lG13cH.ckdj10nBkjW/",
-        "readAccess": [
+        "subscribeAccess": [
             "sensors/1/metrics/#"
         ],
-        "writeAccess": [
+        "publishAccess": [
             "sensors/+/actions/restart",
             "sensors/+/metrics/#"
         ]

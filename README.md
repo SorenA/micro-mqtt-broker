@@ -79,15 +79,15 @@ Sample file:
 ```yaml
 ---
 login: "sample-admin:$apr1$.qu4F5HV$q8Rw/DrkmAizalGeHi56t0" # .htpasswd format
-readAccess:
+subscribeAccess:
 - "#" # Full access
-writeAccess:
+publishAccess:
 - "#" # Full access
 ---
 login: "sample-user:$apr1$1QzP30DN$Do9gE3Mvg2SrVJHuRIOjQ/" # .htpasswd format
-readAccess:
+subscribeAccess:
 - "sensors/1/metrics/#"
-writeAccess:
+publishAccess:
 - "sensors/+/actions/restart"
 - "sensors/+/metrics/#"
 ```
@@ -107,19 +107,19 @@ Sample file:
 [
     {
         "login": "sample-admin:$apr1$.qu4F5HV$q8Rw/DrkmAizalGeHi56t0", // .htpasswd format
-        "readAccess": [
+        "subscribeAccess": [
             "#"
         ],
-        "writeAccess": [
+        "publishAccess": [
             "#"
         ]
     },
     {
         "login": "sample-user:$apr1$1QzP30DN$Do9gE3Mvg2SrVJHuRIOjQ/", // .htpasswd format
-        "readAccess": [
+        "subscribeAccess": [
             "sensors/1/metrics/#"
         ],
-        "writeAccess": [
+        "publishAccess": [
             "sensors/+/actions/restart",
             "sensors/+/metrics/#"
         ]
@@ -156,10 +156,10 @@ Response format required from API:
 ```js
 {
     "isAuthenticated": true, // Boolean, true if credentials matched, otherwise false
-    "readAccess": [ // String array, only applicable if authenticated
+    "subscribeAccess": [ // String array, only applicable if authenticated
         "#"
     ],
-    "writeAccess": [ // String array, only applicable if authenticated
+    "publishAccess": [ // String array, only applicable if authenticated
         "#"
     ]
 }
