@@ -21,14 +21,15 @@ console.info(`Using auth provider: ${authProvider}`);
 let activeAuthProvider = null;
 switch (authProvider) {
   case 'NONE':
-      activeAuthProvider = require('./providers/auth-none');
+    activeAuthProvider = require('./providers/auth-none');
     break;
   case 'YAML':
-      activeAuthProvider = require('./providers/auth-yaml');
-      activeAuthProvider.initalize(authYamlFile);
+    activeAuthProvider = require('./providers/auth-yaml');
+    activeAuthProvider.initalize(authYamlFile);
+    break;
     break;
   default:
-    throw new Error('Invalid provider in AUTH_PROVIDER');
+    throw new Error(`Invalid provider in AUTH_PROVIDER: ${authProvider}`);
 }
 
 /**
