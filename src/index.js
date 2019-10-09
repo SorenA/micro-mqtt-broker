@@ -32,15 +32,36 @@ switch (authProvider) {
 }
 
 /**
+ * Method: Is ACL Matched - Checks if a topic matches the ACL provided
+ */
+function isAclMatched(accessControlList, topic) {
+  // Check ACL
+  for (const accessControlEntry of accessControlList) {
+    // Check for exact topic match
+    if (accessControlEntry === topic) {
+      return true;
+    }
+
+    // Check for single and multi-level matches using regex
+    if (topic.match('^' + accessControlEntry.replace('+', '[^/]+').replace('#', '.+') + '$')) {
+      return true;
+    }
+  }
+
+  // No match
+  return false;
+}
+
+/**
  * Callback: Authenticate - Called when a client tries to authenticate on connect
  */
 const cbAuthenticate = async function (client, username, password, callback) {
   let isAuthenticated = activeAuthProvider.isAuthenticationValid(client, username, password);
 
   if (isAuthenticated) {
-    console.info(`Client ${client.id}: Accepted connection - Valid authentication`);
+    console.info(`Client ${client.id}: Accepted authentication - Connected as user ${username}`);
   } else {
-    console.info(`Client ${client.id}: Rejected connection - Invalid credentials`);
+    console.info(`Client ${client.id}: Rejected authentication - Invalid credentials`);
   }
 
   callback(null, isAuthenticated);
@@ -50,9 +71,8 @@ const cbAuthenticate = async function (client, username, password, callback) {
  * Callback: Authorize Publish - Called when a client attempts to publish a message
  */
 const cbAuthorizePublish = function (client, topic, payload, callback) {
-  const accessControlList = activeAuthProvider.getSubscribeAccessControlList(client);
-
-  let isAuthorized = true;
+  const accessControlList = activeAuthProvider.getPublishAccessControlList(client);
+  const isAuthorized = isAclMatched(accessControlList, topic);
 
   if (isAuthorized) {
     console.info(`Client ${client.id}: Accepted publish: ${topic}`);
@@ -67,9 +87,8 @@ const cbAuthorizePublish = function (client, topic, payload, callback) {
  * Callback: Authorize Subscribe - Called when a client attempts to subscribe to a topic
  */
 const cbAuthorizeSubscribe = function (client, topic, callback) {
-  const accessControlList = activeAuthProvider.getPublishAccessControlList(client);
-
-  let isAuthorized = true;
+  const accessControlList = activeAuthProvider.getSubscribeAccessControlList(client);
+  const isAuthorized = isAclMatched(accessControlList, topic);
 
   if (isAuthorized) {
     console.info(`Client ${client.id}: Accepted subscription: ${topic}`);
