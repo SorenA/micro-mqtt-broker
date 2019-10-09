@@ -17,10 +17,15 @@ const authApiEndpoint = process.env.AUTH_API_ENDPOINT || '';
 const authApiToken = process.env.AUTH_API_TOKEN || '';
 
 // Select auth provider
+console.info(`Using auth provider: ${authProvider}`);
 let activeAuthProvider = null;
 switch (authProvider) {
   case 'NONE':
       activeAuthProvider = require('./providers/auth-none');
+    break;
+  case 'YAML':
+      activeAuthProvider = require('./providers/auth-yaml');
+      activeAuthProvider.initalize(authYamlFile);
     break;
   default:
     throw new Error('Invalid provider in AUTH_PROVIDER');

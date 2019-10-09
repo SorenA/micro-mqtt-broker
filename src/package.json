@@ -5,7 +5,9 @@
     "dev": "node --require dotenv/config index.js"
   },
   "dependencies": {
-    "mosca": "2.8.3"
+    "mosca": "2.8.3",
+    "htpasswd": "2.4.0",
+    "yaml": "1.7.1"
   },
   "devDependencies": {
     "dotenv": "7.0.0"
