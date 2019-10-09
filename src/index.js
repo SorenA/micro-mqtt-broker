@@ -31,6 +31,10 @@ switch (authProvider) {
     activeAuthProvider = require('./providers/auth-json');
     activeAuthProvider.initalize(authJsonFile);
     break;
+  case 'API':
+    activeAuthProvider = require('./providers/auth-api');
+    activeAuthProvider.initalize(authApiEndpoint, authApiToken);
+    break;
   default:
     throw new Error(`Invalid provider in AUTH_PROVIDER: ${authProvider}`);
 }
