@@ -9,16 +9,15 @@ const htpasswdUtil = require('htpasswd/src/utils');
 
 let authUsers = [];
 
-
 module.exports = {
-  initalize: function(configFile) {
+  initalize: function (configFile) {
     // Read config file contents
     const configContents = fs.readFileSync(configFile, 'utf8');
     authUsers = YAML.parse(configContents);
     console.info(`YAML Auth Provider: Loaded ${authUsers.length} users from file`);
   },
   isAuthenticationValid: function (mqttClient, username, password) {
-    for(const authUser of authUsers) {
+    for (const authUser of authUsers) {
       // Extract and check username
       const authUserLoginFragments = authUser.login.split(':');
       if (authUserLoginFragments[0] === username) {
