@@ -27,6 +27,9 @@ switch (authProvider) {
     activeAuthProvider = require('./providers/auth-yaml');
     activeAuthProvider.initalize(authYamlFile);
     break;
+  case 'JSON':
+    activeAuthProvider = require('./providers/auth-json');
+    activeAuthProvider.initalize(authJsonFile);
     break;
   default:
     throw new Error(`Invalid provider in AUTH_PROVIDER: ${authProvider}`);
