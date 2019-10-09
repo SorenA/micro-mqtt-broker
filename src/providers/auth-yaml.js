@@ -31,7 +31,6 @@ module.exports = {
               subscribeAccess: authUser.subscribeAccess,
               publishAccess: authUser.publishAccess,
             };
-            console.log(mqttClient.authData);
 
             return true;
           }
