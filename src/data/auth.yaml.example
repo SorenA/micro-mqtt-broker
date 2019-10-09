@@ -1,0 +1,13 @@
+---
+login: "admin:$apr1$eMm5z3r4$J9Cu/VXChQ6Xg3kDj3.Nh." # .htpasswd format - Username: admin, Password: 123
+readAccess:
+- "#" # Full access
+writeAccess:
+- "#" # Full access
+---
+login: "user:$apr1$5Ss9ZFwG$DB4lG13cH.ckdj10nBkjW/" # .htpasswd format - Username: user, Password: 456
+readAccess:
+- "sensors/1/metrics/#"
+writeAccess:
+- "sensors/+/actions/restart"
+- "sensors/+/metrics/#"

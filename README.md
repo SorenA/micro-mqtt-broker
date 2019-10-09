@@ -20,10 +20,14 @@ Defaults for environment variables:
 
 ```env
 TLS_ENABLE=false
-TLS_KEY_FILE=./tls/cert.key
-TLS_CERT_FILE=./tls/cert.cert
+TLS_KEY_FILE=/opt/mqtt/cert.key
+TLS_CERT_FILE=/opt/mqtt/cert.cert
 
 AUTH_PROVIDER=NONE
+AUTH_YAML_FILE=/opt/mqtt/auth.yaml
+AUTH_JSON_FILE=/opt/mqtt/auth.json
+AUTH_API_ENDPOINT=
+AUTH_API_TOKEN=
 ```
 
 ### TLS
@@ -32,8 +36,8 @@ The connections can be secured using TLS by providing a certificate:
 
 ```env
 TLS_ENABLE=true
-TLS_KEY_FILE=./tls/cert.key
-TLS_CERT_FILE=./tls/cert.cert
+TLS_KEY_FILE=/opt/mqtt/cert.key
+TLS_CERT_FILE=/opt/mqtt/cert.cert
 ```
 
 ### Authentication and autorization configuration
@@ -67,7 +71,7 @@ Configure environment variables:
 
 ```env
 AUTH_PROVIDER=YAML
-AUTH_YAML_FILE=/data/auth.yaml
+AUTH_YAML_FILE=/opt/mqtt/auth.yaml
 ```
 
 Sample file:
@@ -94,7 +98,7 @@ Configure environment variables:
 
 ```env
 AUTH_PROVIDER=JSON
-AUTH_JSON_FILE=/data/auth.json
+AUTH_JSON_FILE=/opt/mqtt/auth.json
 ```
 
 Sample file:
@@ -119,7 +123,7 @@ Sample file:
             "sensors/+/actions/restart",
             "sensors/+/metrics/#"
         ]
-    },
+    }
 ]
 ```
 
@@ -160,3 +164,17 @@ Response format required from API:
     ]
 }
 ```
+
+## Development
+
+Requirements:
+
+- NodeJS 7 (Required by Mosca)
+
+Recommended:
+
+- NVM or similar to change between Node versions (Version 7 is quite old)
+
+Install dependencies using `npm i` from `/src` directory, it will show errors during install, these can mostly be ignored.
+
+Run local version using `npm run dev` from `/src` directory.
