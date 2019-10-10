@@ -27,7 +27,7 @@ module.exports = {
       }
       console.log(payload);
 
-      return axios.post(apiEndpoint, payload)
+      axios.post(apiEndpoint, payload)
         .then(response => {
           if (response.status === 200 && response.data.isAuthenticated === true) {
             // Authentication successful, save ACL to client object for later fetching
@@ -38,15 +38,15 @@ module.exports = {
             };
 
             resolve(true);
-            return;
+          } else {
+            resolve(false);
           }
         })
         .catch(err => {
           console.info('API Auth Provider: Error while authenticating');
           console.info(err);
+          resolve(false);
         });
-
-      resolve(false);
     });
   },
   getSubscribeAccessControlList: function (mqttClient) {

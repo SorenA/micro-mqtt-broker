@@ -67,7 +67,7 @@ const cbAuthenticate = async function (client, username, password, callback) {
   activeAuthProvider.isAuthenticationValid(client, username, password)
     .then(isAuthenticated => {
       if (isAuthenticated) {
-        console.info(`Client ${client.id}: Accepted authentication - Connected as user ${username}`);
+        console.info(`Client ${client.id}: Accepted authentication - Connected as user: ${username}`);
       } else {
         console.info(`Client ${client.id}: Rejected authentication - Invalid credentials`);
       }
