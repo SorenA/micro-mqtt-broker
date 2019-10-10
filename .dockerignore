@@ -1,0 +1,9 @@
+.dockerignore
+Dockerfile
+
+k8s
+src/node_modules
+src/package-lock.json
+src/.env
+src/.env.example
+src/data

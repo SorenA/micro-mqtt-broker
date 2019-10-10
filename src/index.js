@@ -169,3 +169,12 @@ server.on('ready', onServerReady);
 server.on('clientConnected', onClientConnected);
 server.on('clientDisconnected', onClientDisconnected);
 server.on('published', onMessagePublished);
+
+/**
+ * Process Event: SIGINT - Exit process gracefully
+ */
+process.on('SIGINT', function() {
+  console.info('MQTT Broker: SIGINT received, shutting down');
+  server.close();
+  process.exit();
+});
