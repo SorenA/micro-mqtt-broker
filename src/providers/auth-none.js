@@ -4,8 +4,10 @@
  */
 
 module.exports = {
-  isAuthenticationValid: function (mqttClient, username, password) {
-    return true;
+  isAuthenticationValid: function (mqttClient, username = '', password = '') {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
   },
   getSubscribeAccessControlList: function (mqttClient) {
     return [

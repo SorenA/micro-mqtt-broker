@@ -64,15 +64,16 @@ function isAclMatched(accessControlList, topic) {
  * Callback: Authenticate - Called when a client tries to authenticate on connect
  */
 const cbAuthenticate = async function (client, username, password, callback) {
-  let isAuthenticated = activeAuthProvider.isAuthenticationValid(client, username, password);
+  activeAuthProvider.isAuthenticationValid(client, username, password)
+    .then(isAuthenticated => {
+      if (isAuthenticated) {
+        console.info(`Client ${client.id}: Accepted authentication - Connected as user ${username}`);
+      } else {
+        console.info(`Client ${client.id}: Rejected authentication - Invalid credentials`);
+      }
 
-  if (isAuthenticated) {
-    console.info(`Client ${client.id}: Accepted authentication - Connected as user ${username}`);
-  } else {
-    console.info(`Client ${client.id}: Rejected authentication - Invalid credentials`);
-  }
-
-  callback(null, isAuthenticated);
+      callback(null, isAuthenticated);
+    });
 }
 
 /**

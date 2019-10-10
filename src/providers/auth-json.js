@@ -15,30 +15,33 @@ module.exports = {
     authUsers = JSON.parse(configContents);
     console.info(`JSON Auth Provider: Loaded ${authUsers.length} users from file`);
   },
-  isAuthenticationValid: function (mqttClient, username, password) {
-    for (const authUser of authUsers) {
-      // Extract and check username
-      const authUserLoginFragments = authUser.login.split(':');
-      if (authUserLoginFragments[0] === username) {
-        // Username matches, check password digest
-        try {
-          if (htpasswdUtil.verify(authUserLoginFragments[1], password)) {
-            // We have a match, save ACL to client object for later fetching
-            mqttClient.authData = {
-              username: username,
-              subscribeAccess: authUser.subscribeAccess,
-              publishAccess: authUser.publishAccess,
-            };
+  isAuthenticationValid: function (mqttClient, username = '', password = '') {
+    return new Promise((resolve, reject) => {
+      for (const authUser of authUsers) {
+        // Extract and check username
+        const authUserLoginFragments = authUser.login.split(':');
+        if (authUserLoginFragments[0] === username) {
+          // Username matches, check password digest
+          try {
+            if (htpasswdUtil.verify(authUserLoginFragments[1], password)) {
+              // We have a match, save ACL to client object for later fetching
+              mqttClient.authData = {
+                username: username,
+                subscribeAccess: authUser.subscribeAccess,
+                publishAccess: authUser.publishAccess,
+              };
 
-            return true;
+              resolve(true);
+              return;
+            }
+          } catch (ex) {
+            // Do nothing, password most likely invalid
           }
-        } catch (ex) {
-          // Do nothing, password most likely invalid
         }
-      }
 
-    }
-    return false;
+      }
+      resolve(false);
+    });
   },
   getSubscribeAccessControlList: function (mqttClient) {
     // Fetch from client object
