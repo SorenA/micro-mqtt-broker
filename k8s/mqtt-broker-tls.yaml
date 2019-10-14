@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-mqtt-broker
+spec:
+  selector:
+    app: micro-mqtt-broker
+  type: ClusterIP
+  ports:
+  - name: mqtt
+    port: 8883
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-mqtt-broker
+spec:
+  selector:
+    matchLabels:
+      app: micro-mqtt-broker
+  template:
+    metadata:
+      labels:
+        app: micro-mqtt-broker
+    spec:
+      containers:
+      - image: sorena/micro-mqtt-broker:1.0.0
+        name: micro-mqtt-broker
+        env:
+        - name: TLS_ENABLE
+          value: "false"
+        - name: TLS_KEY_FILE
+          value: "/opt/mqtt/tls/tls.key"
+        - name: TLS_CERT_FILE
+          value: "/opt/mqtt/tls/tls.crt"
+        ports:
+        - containerPort: 1883
+        - containerPort: 8883
+        volumeMounts:
+        - name: mqtt-config-tls
+          mountPath: "/opt/mqtt/tls"
+          readOnly: true
+      volumes:
+      - name: mqtt-config-tls
+        secret:
+          secretName: micro-mqtt-broker-cert # Cert from CertManager
+          items:
+          - key: tls.key
+            path: tls.key
+          - key: tls.crt
+            path: tls.crt

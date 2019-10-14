@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-mqtt-broker
+spec:
+  selector:
+    app: micro-mqtt-broker
+  type: ClusterIP
+  ports:
+  - name: mqtt
+    port: 1883
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-mqtt-broker
+spec:
+  selector:
+    matchLabels:
+      app: micro-mqtt-broker
+  template:
+    metadata:
+      labels:
+        app: micro-mqtt-broker
+    spec:
+      containers:
+      - image: sorena/micro-mqtt-broker:1.0.0
+        name: micro-mqtt-broker
+        ports:
+        - containerPort: 1883
