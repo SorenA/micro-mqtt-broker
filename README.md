@@ -4,7 +4,9 @@ Micro MQTT broker based on Mosca MQTT with TLS support and authentication using 
 
 ## Docker & Kubernetes
 
-The broker was built with Kubernetes in mind, under the directory `/k8s` are sample deployment configurations.
+The broker was built with Kubernetes in mind, under the directory `/k8s` are sample deployment configurations. The deployments use NodePort mappings for simplicity, but could use a more traditional setup easily.
+
+Prebuilt images can be found at on Docker Hub at [sorena/micro-mqtt-broker](https://hub.docker.com/r/sorena/micro-mqtt-broker).
 
 ## Related projects
 
@@ -177,3 +179,11 @@ Recommended:
 Install dependencies using `npm i` from `/src` directory, it will show errors during install, these can mostly be ignored.
 
 Run local version using `npm run dev` from `/src` directory.
+
+### Built with NodeJS packages
+
+- [dotenv](https://github.com/motdotla/dotenv)
+- [Mosca](https://github.com/mcollina/mosca)
+- [Axios](https://github.com/axios/axios)
+- [yaml](https://github.com/eemeli/yaml)
+- [htpasswd](https://github.com/http-auth/htpasswd)
