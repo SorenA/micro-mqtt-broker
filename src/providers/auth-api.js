@@ -25,7 +25,6 @@ module.exports = {
       if (apiToken) {
         payload.authToken = apiToken;
       }
-      console.log(payload);
 
       axios.post(apiEndpoint, payload)
         .then(response => {

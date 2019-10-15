@@ -69,7 +69,7 @@ const cbAuthenticate = async function (client, username, password, callback) {
       if (isAuthenticated) {
         console.info(`Client ${client.id}: Accepted authentication - Connected as user: ${username}`);
       } else {
-        console.info(`Client ${client.id}: Rejected authentication - Invalid credentials`);
+        console.info(`Client ${client.id}: Rejected authentication - Invalid credentials for user: ${username}`);
       }
 
       callback(null, isAuthenticated);
